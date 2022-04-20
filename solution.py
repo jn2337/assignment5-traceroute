@@ -87,13 +87,12 @@ def build_packet():
 
 def get_route(hostname):
     timeLeft = TIMEOUT
-    tracelist1 = [] #This is your list to use when iterating through each trace
+    tracelist1 = []  # This is your list to use when iterating through each trace
     tracelist2 = [] #This is your list to contain all traces
 
-    for ttl in range(1,MAX_HOPS):
+    destAddr = gethostbyname(hostname)
+    for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
-            destAddr = gethostbyname(hostname)
-
             #Fill in start
             # Make a raw socket named mySocket
             icmp = getprotobyname("icmp")
@@ -105,7 +104,7 @@ def get_route(hostname):
             try:
                 d = build_packet()
                 mySocket.sendto(d, (hostname, 0))
-                t= time.time()
+                t = time.time()
                 startedSelect = time.time()
                 whatReady = select.select([mySocket], [], [], timeLeft)
                 howLongInSelect = (time.time() - startedSelect)
@@ -113,7 +112,13 @@ def get_route(hostname):
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     #You should add the list above to your all traces list
+                    # recvPacket, addr = mySocket.recvfrom(1024)
+                    # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
+                    # tracelist1.append(ttl)
+                    # tracelist1.append(addr[0])
+                    # tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
+                    tracelist1.clear()
                     #Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
                 timeReceived = time.time()
@@ -123,6 +128,7 @@ def get_route(hostname):
                     #Fill in start
                     #You should add the list above to your all traces list
                     tracelist2.append(tracelist1)
+                    tracelist1.clear()
                     #Fill in end
             except timeout:
                 continue
@@ -136,8 +142,9 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    dest = gethostbyname(hostname)
-                    print("Host name: ", dest, "\n")
+                    dest = gethostbyaddr(hostname)
+                    # need to fix this, it needs to reverse lookup the IP address of the current iteration IP, not the original destination
+                    # print("Host address: ", dest, "\n")
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
@@ -148,36 +155,45 @@ def get_route(hostname):
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
-                    print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-time.time())*1000), addr[0], hostname))
+                    currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
+                    print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     #You should add your responses to your lists here
                     tracelist1.append(ttl)
                     tracelist1.append(addr[0])
-                    tracelist1.append(hostname)
+                    tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
+                    tracelist1.clear()
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
-                    print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-time.time())*1000), addr[0], hostname))
+                    currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
+                    print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     #You should add your responses to your lists here
                     tracelist1.append(ttl)
                     tracelist1.append(addr[0])
-                    tracelist1.append(hostname)
+                    tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
+                    tracelist1.clear()
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
-                    print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-time.time())*1000), addr[0], hostname))
+                    currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
+                    print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     tracelist1.append(ttl)
                     tracelist1.append(addr[0])
-                    tracelist1.append(hostname)
+                    tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
+                    tracelist1.clear()
+                    print("\n Tracelist 2: \n", tracelist2, "\n\n")
                     if addr[0] == destAddr:
                         return tracelist2
+                    else:
+                        ttl = ttl + 1
                     #Fill in end
                 else:
                     #Fill in start
