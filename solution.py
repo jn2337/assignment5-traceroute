@@ -112,13 +112,8 @@ def get_route(hostname):
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     #You should add the list above to your all traces list
-                    # recvPacket, addr = mySocket.recvfrom(1024)
-                    # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
-                    # tracelist1.append(ttl)
-                    # tracelist1.append(addr[0])
-                    # tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
-                    tracelist1.clear()
+                    # tracelist1.clear()
                     #Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
                 timeReceived = time.time()
@@ -128,7 +123,7 @@ def get_route(hostname):
                     #Fill in start
                     #You should add the list above to your all traces list
                     tracelist2.append(tracelist1)
-                    tracelist1.clear()
+                    # tracelist1.clear()
                     #Fill in end
             except timeout:
                 continue
@@ -144,7 +139,7 @@ def get_route(hostname):
                     #Fill in start
                     dest = gethostbyaddr(hostname)
                     # need to fix this, it needs to reverse lookup the IP address of the current iteration IP, not the original destination
-                    # print("Host address: ", dest, "\n")
+                    print("Host address: ", dest, "\n")
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
@@ -159,6 +154,7 @@ def get_route(hostname):
                     print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     #You should add your responses to your lists here
                     tracelist1.append(ttl)
+                    tracelist1.append((timeReceived-startedSelect)*1000)
                     tracelist1.append(addr[0])
                     tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
@@ -172,6 +168,7 @@ def get_route(hostname):
                     print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     #You should add your responses to your lists here
                     tracelist1.append(ttl)
+                    tracelist1.append((timeReceived-startedSelect)*1000)
                     tracelist1.append(addr[0])
                     tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
@@ -185,6 +182,7 @@ def get_route(hostname):
                     currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
                     print("Trace results: \n {0}  {1}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     tracelist1.append(ttl)
+                    tracelist1.append((timeReceived-startedSelect)*1000)
                     tracelist1.append(addr[0])
                     tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
@@ -193,7 +191,7 @@ def get_route(hostname):
                     if addr[0] == destAddr:
                         return tracelist2
                     else:
-                        ttl = ttl + 1
+                        continue
                     #Fill in end
                 else:
                     #Fill in start
