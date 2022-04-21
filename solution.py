@@ -160,7 +160,7 @@ def get_route(hostname):
                     tracelist1.append(addr[0])
                     tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
-                    tracelist1.clear()
+                    # tracelist1.clear()
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -174,7 +174,7 @@ def get_route(hostname):
                     tracelist1.append(addr[0])
                     tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
-                    tracelist1.clear()
+                    # tracelist1.clear()
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -189,10 +189,11 @@ def get_route(hostname):
                     tracelist1.append(currHost1)
                     tracelist2.append(tracelist1)
                     print("\n Tracelist 1 pre clear: \n", tracelist2, "\n\n")
-                    tracelist1.clear()
+                    # tracelist1.clear()
                     print("\n Tracelist 1: \n", tracelist2, "\n\n")
                     print("\n Tracelist 2: \n", tracelist2, "\n\n")
                     if addr[0] == destAddr:
+                        tracelist1.clear()
                         return tracelist2
                     else:
                         continue
