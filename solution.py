@@ -91,6 +91,7 @@ def get_route(hostname):
     tracelist2 = [] #This is your list to contain all traces
 
     destAddr = gethostbyname(hostname)
+
     for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
             #Fill in start
@@ -109,23 +110,22 @@ def get_route(hostname):
                 whatReady = select.select([mySocket], [], [], timeLeft)
                 howLongInSelect = (time.time() - startedSelect)
                 if whatReady[0] == []: # Timeout
-                    tracelist1.append(ttl)
+                    tracelist1.append(str(ttl))
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     #You should add the list above to your all traces list
                     tracelist2.append(tracelist1)
-                    # tracelist1.clear()
                     #Fill in end
                 recvPacket, addr = mySocket.recvfrom(1024)
                 timeReceived = time.time()
                 timeLeft = timeLeft - howLongInSelect
                 if timeLeft <= 0:
-                    tracelist1.append(ttl)
+                    tracelist1.append(str(ttl))
                     tracelist1.append("* * * Request timed out.")
                     #Fill in start
                     #You should add the list above to your all traces list
                     tracelist2.append(tracelist1)
-                    # tracelist1.clear()
+                tracelist1 = []
                     #Fill in end
             except timeout:
                 continue
@@ -139,7 +139,7 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    dest = gethostbyaddr(hostname)
+                    dest = gethostbyaddr(addr[0])
                     # need to fix this, it needs to reverse lookup the IP address of the current iteration IP, not the original destination
                     print("Host address: ", dest, "\n")
                     #Fill in end
@@ -152,15 +152,15 @@ def get_route(hostname):
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
-                    currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
+                    # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     #You should add your responses to your lists here
-                    tracelist1.append(ttl)
-                    tracelist1.append((timeReceived-startedSelect)*1000)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(currHost1)
-                    tracelist2.append(tracelist1)
-                    # tracelist1.clear()
+                    tracelist1.append(str(ttl))
+                    tracelist1.append(str(timeReceived-startedSelect)*1000)
+                    tracelist1.append(str(addr[0]))
+                    tracelist1.append(str(dest[0]))
+                    tracelist2.append(str(tracelist1))
+                    tracelist1 = []
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -169,12 +169,12 @@ def get_route(hostname):
                     currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     #You should add your responses to your lists here
-                    tracelist1.append(ttl)
-                    tracelist1.append((timeReceived-startedSelect)*1000)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(currHost1)
-                    tracelist2.append(tracelist1)
-                    # tracelist1.clear()
+                    tracelist1.append(str(ttl))
+                    tracelist1.append(str(timeReceived - startedSelect) * 1000)
+                    tracelist1.append(str(addr[0]))
+                    tracelist1.append(str(dest[0]))
+                    tracelist2.append(str(tracelist1))
+                    tracelist1 = []
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -183,20 +183,20 @@ def get_route(hostname):
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
-                    tracelist1.append(ttl)
-                    tracelist1.append((timeReceived-startedSelect)*1000)
-                    tracelist1.append(addr[0])
-                    tracelist1.append(currHost1)
-                    tracelist2.append(tracelist1)
-                    print("\n Tracelist 1 pre clear: \n", tracelist2, "\n\n")
+                    tracelist1.append(str(ttl))
+                    tracelist1.append(str(timeReceived-startedSelect)*1000)
+                    tracelist1.append(str(addr[0]))
+                    tracelist1.append(str(dest[0]))
+                    tracelist2.append(str(tracelist1))
+                    # print("\n Tracelist 1 pre clear: \n", tracelist2, "\n\n")
                     # tracelist1.clear()
-                    print("\n Tracelist 1: \n", tracelist2, "\n\n")
-                    print("\n Tracelist 2: \n", tracelist2, "\n\n")
+                    # print("\n Tracelist 1: \n", tracelist2, "\n\n")
+                    # print("\n Tracelist 2: \n", tracelist2, "\n\n")
                     if addr[0] == destAddr:
-                        tracelist1.clear()
                         return tracelist2
                     else:
                         continue
+                    tracelist1 = []
                     #Fill in end
                 else:
                     #Fill in start
