@@ -166,7 +166,7 @@ def get_route(hostname):
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
-                    currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
+                    # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     #You should add your responses to your lists here
                     tracelist1.append(str(ttl))
@@ -181,7 +181,7 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
-                    currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
+                    # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], currHost1))
                     tracelist1.append(str(ttl))
                     tracelist1.append(str(timeReceived-startedSelect)*1000)
