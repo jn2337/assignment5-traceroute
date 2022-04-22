@@ -191,10 +191,10 @@ def get_route(hostname):
                     # print("\n Tracelist 1: \n", tracelist2, "\n\n")
                     # print("\n Tracelist 2: \n", tracelist2, "\n\n")
                     print("\naddr0: ", addr[0], "\n\n\n")
-                    if addr[0] == destAddr:
-                        return tracelist2
-                    else:
-                        continue
+                    # if addr[0] == destAddr:
+                    return tracelist2
+                    # else:
+                    #     continue
                     tracelist1 = []
                     #Fill in end
                 else:
