@@ -139,7 +139,7 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    dest, dest2, dest3 = gethostbyaddr(addr[0])
+                    dest, dest2, dest3 = gethostbyaddr(addr)
                     # need to fix this, it needs to reverse lookup the IP address of the current iteration IP, not the original destination
                     print("Host address: ", dest, "\n")
                     #Fill in end
@@ -190,6 +190,7 @@ def get_route(hostname):
                     # tracelist1.clear()
                     # print("\n Tracelist 1: \n", tracelist2, "\n\n")
                     # print("\n Tracelist 2: \n", tracelist2, "\n\n")
+                    print("\naddr0: ", addr[0], "\n\n\n")
                     if addr[0] == destAddr:
                         return tracelist2
                     else:
