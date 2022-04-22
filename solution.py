@@ -156,7 +156,7 @@ def get_route(hostname):
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest))
                     #You should add your responses to your lists here
                     tracelist1.append(str(ttl))
-                    tracelist1.append(str(timeReceived-startedSelect)*1000)
+                    tracelist1.append(str((timeReceived-startedSelect)*1000))
                     tracelist1.append(str(addr[0]))
                     tracelist1.append(str(dest))
                     tracelist2.append(str(tracelist1))
@@ -169,7 +169,7 @@ def get_route(hostname):
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest))
                     #You should add your responses to your lists here
                     tracelist1.append(str(ttl))
-                    tracelist1.append(str(timeReceived - startedSelect) * 1000)
+                    tracelist1.append(str((timeReceived - startedSelect) * 1000))
                     tracelist1.append(str(addr[0]))
                     tracelist1.append(str(dest))
                     tracelist2.append(str(tracelist1))
@@ -182,7 +182,7 @@ def get_route(hostname):
                     # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
                     print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest))
                     tracelist1.append(str(ttl))
-                    tracelist1.append(str(timeReceived-startedSelect)*1000)
+                    tracelist1.append(str((timeReceived-startedSelect)*1000))
                     tracelist1.append(str(addr[0]))
                     tracelist1.append(str(dest))
                     tracelist2.append(str(tracelist1))
