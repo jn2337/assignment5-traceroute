@@ -139,7 +139,7 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    dest, dest2, dest3 = gethostbyaddr(addr[0])
+                    dest = gethostbyaddr(addr[0])[0]
                     # need to fix this, it needs to reverse lookup the IP address of the current iteration IP, not the original destination
                     print("Host address: ", dest, "\n")
                     #Fill in end
