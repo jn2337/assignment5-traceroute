@@ -94,6 +94,7 @@ def get_route(hostname):
 
     for ttl in range(1, MAX_HOPS):
         for tries in range(TRIES):
+            tracelist1 = []
             #Fill in start
             # Make a raw socket named mySocket
             icmp = getprotobyname("icmp")
@@ -125,7 +126,6 @@ def get_route(hostname):
                     #Fill in start
                     #You should add the list above to your all traces list
                     tracelist2.append(tracelist1)
-                tracelist1 = []
                     #Fill in end
             except timeout:
                 continue
@@ -139,13 +139,13 @@ def get_route(hostname):
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
-                    dest = gethostbyaddr(addr[0])
+                    dest, dest2, dest3 = gethostbyaddr(addr[0])
                     # need to fix this, it needs to reverse lookup the IP address of the current iteration IP, not the original destination
                     print("Host address: ", dest, "\n")
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
-                    print("hostname not returnable\n")
+                    dest = str("hostname not returnable")
                     #Fill in end
 
                 if types == 11:
@@ -153,28 +153,26 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
-                    print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest[0]))
+                    print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest))
                     #You should add your responses to your lists here
                     tracelist1.append(str(ttl))
                     tracelist1.append(str(timeReceived-startedSelect)*1000)
                     tracelist1.append(str(addr[0]))
-                    tracelist1.append(str(dest[0]))
+                    tracelist1.append(str(dest))
                     tracelist2.append(str(tracelist1))
-                    tracelist1 = []
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
-                    print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest[0]))
+                    print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest))
                     #You should add your responses to your lists here
                     tracelist1.append(str(ttl))
                     tracelist1.append(str(timeReceived - startedSelect) * 1000)
                     tracelist1.append(str(addr[0]))
-                    tracelist1.append(str(dest[0]))
+                    tracelist1.append(str(dest))
                     tracelist2.append(str(tracelist1))
-                    tracelist1 = []
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -182,11 +180,11 @@ def get_route(hostname):
                     #Fill in start
                     # You should add your responses to your lists here and return your list if your destination IP is met
                     # currHost1, currHost2, currHost3 = gethostbyaddr(addr[0])
-                    print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest[0]))
+                    print("Trace results: \n {0}  {1:g}ms {2} {3} \n".format(ttl, ((timeReceived-startedSelect)*1000), addr[0], dest))
                     tracelist1.append(str(ttl))
                     tracelist1.append(str(timeReceived-startedSelect)*1000)
                     tracelist1.append(str(addr[0]))
-                    tracelist1.append(str(dest[0]))
+                    tracelist1.append(str(dest))
                     tracelist2.append(str(tracelist1))
                     # print("\n Tracelist 1 pre clear: \n", tracelist2, "\n\n")
                     # tracelist1.clear()
