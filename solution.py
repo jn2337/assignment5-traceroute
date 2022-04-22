@@ -189,7 +189,7 @@ def get_route(hostname):
                     # print("\n Tracelist 1 pre clear: \n", tracelist2, "\n\n")
                     # tracelist1.clear()
                     # print("\n Tracelist 1: \n", tracelist2, "\n\n")
-                    # print("\n Tracelist 2: \n", tracelist2, "\n\n")
+                    print("\n Tracelist 2: \n", tracelist2, "\n\n")
                     print("\naddr0: ", addr[0], "\n\n\n")
                     # if addr[0] == destAddr:
                     return tracelist2
@@ -200,7 +200,8 @@ def get_route(hostname):
                 else:
                     #Fill in start
                     #If there is an exception/error to your if statements, you should append that to your list here
-                    print("hostname not returnable\n")
+                    tracelist2.append(str("hostname not returnable")[0])
+                    print("hostname not returnable")
                     #Fill in end
                 break
             finally:
