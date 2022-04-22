@@ -159,7 +159,7 @@ def get_route(hostname):
                     tracelist1.append(str((timeReceived-startedSelect)*1000))
                     tracelist1.append(str(addr[0]))
                     tracelist1.append(str(dest))
-                    tracelist2.append(str(tracelist1))
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -172,7 +172,7 @@ def get_route(hostname):
                     tracelist1.append(str((timeReceived - startedSelect) * 1000))
                     tracelist1.append(str(addr[0]))
                     tracelist1.append(str(dest))
-                    tracelist2.append(str(tracelist1))
+                    tracelist2.append(tracelist1)
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -185,7 +185,7 @@ def get_route(hostname):
                     tracelist1.append(str((timeReceived-startedSelect)*1000))
                     tracelist1.append(str(addr[0]))
                     tracelist1.append(str(dest))
-                    tracelist2.append(str(tracelist1))
+                    tracelist2.append(tracelist1)
                     # print("\n Tracelist 1 pre clear: \n", tracelist2, "\n\n")
                     # tracelist1.clear()
                     # print("\n Tracelist 1: \n", tracelist2, "\n\n")
@@ -200,7 +200,7 @@ def get_route(hostname):
                 else:
                     #Fill in start
                     #If there is an exception/error to your if statements, you should append that to your list here
-                    tracelist2.append(str("hostname not returnable")[0])
+                    tracelist2.append("hostname not returnable" [0])
                     print("hostname not returnable")
                     #Fill in end
                 break
